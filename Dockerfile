@@ -6,7 +6,8 @@ USER keycloak
 # Copy template, scripts, and themes
 COPY --chown=keycloak:keycloak realm-export.json.template /opt/keycloak/data/import/
 COPY --chown=keycloak:keycloak scripts/start-with-template.sh /opt/keycloak/bin/
-COPY --chown=keycloak:keycloak themes/ /opt/keycloak/themes/
+# if there are custom themes, uncomment the following line
+# COPY --chown=keycloak:keycloak themes/ /opt/keycloak/themes/
 
 # Make script executable
 RUN chmod +x /opt/keycloak/bin/start-with-template.sh
