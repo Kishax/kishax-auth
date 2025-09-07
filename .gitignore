@@ -1,0 +1,29 @@
+# Environment files
+.env
+.env.local
+.env.production
+
+# Docker
+docker-compose.override.yml
+
+# Keycloak data
+data/
+import/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
