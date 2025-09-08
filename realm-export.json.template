@@ -29,13 +29,12 @@
       "displayName": "GitHub",
       "providerId": "github",
       "enabled": true,
-      "updateProfileFirstLoginMode": "on",
+      "updateProfileFirstLoginMode": "off",
       "trustEmail": true,
       "storeToken": false,
       "addReadTokenRoleOnCreate": false,
       "authenticateByDefault": false,
       "linkOnly": false,
-      "firstBrokerLoginFlowAlias": "first broker login",
       "config": {
         "clientId": "${GITHUB_CLIENT_ID}",
         "clientSecret": "${GITHUB_CLIENT_SECRET}",
@@ -49,7 +48,7 @@
       "identityProviderAlias": "github",
       "identityProviderMapper": "github-user-attribute-mapper",
       "config": {
-        "syncMode": "INHERIT",
+        "syncMode": "FORCE",
         "jsonField": "id",
         "userAttribute": "username"
       }
@@ -69,7 +68,7 @@
       "identityProviderAlias": "github",
       "identityProviderMapper": "github-user-attribute-mapper",
       "config": {
-        "syncMode": "FORCE",
+        "syncMode": "INHERIT",
         "jsonField": "email",
         "userAttribute": "email"
       }
