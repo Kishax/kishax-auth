@@ -59,7 +59,7 @@
       "identityProviderAlias": "github",
       "identityProviderMapper": "github-user-attribute-mapper",
       "config": {
-        "syncMode": "INHERIT",
+        "syncMode": "FORCE",
         "jsonField": "login",
         "userAttribute": "github_username"
       }
@@ -69,7 +69,7 @@
       "identityProviderAlias": "github",
       "identityProviderMapper": "github-user-attribute-mapper",
       "config": {
-        "syncMode": "INHERIT",
+        "syncMode": "FORCE",
         "jsonField": "email",
         "userAttribute": "email"
       }
@@ -79,7 +79,7 @@
       "identityProviderAlias": "github", 
       "identityProviderMapper": "github-user-attribute-mapper",
       "config": {
-        "syncMode": "INHERIT",
+        "syncMode": "FORCE",
         "jsonField": "name",
         "userAttribute": "firstName"
       }
