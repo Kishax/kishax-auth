@@ -124,7 +124,7 @@
           "consentRequired": false,
           "config": {
             "attribute.nameformat": "Basic",
-            "user.attribute": "username",
+            "user.attribute": "email",
             "friendly.name": "username",
             "attribute.name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
           }
@@ -139,6 +139,18 @@
             "user.attribute": "email",
             "friendly.name": "email",
             "attribute.name": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+          }
+        },
+        {
+          "name": "github_id",
+          "protocol": "saml",
+          "protocolMapper": "saml-user-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "attribute.nameformat": "Basic",
+            "user.attribute": "github_id",
+            "friendly.name": "github_id",
+            "attribute.name": "https://kishax.net/SAML/Attributes/GitHubID"
           }
         },
         {
