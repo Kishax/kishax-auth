@@ -52,6 +52,16 @@ services:
       # Logging
       KC_LOG_LEVEL: ${KC_LOG_LEVEL}
 
+      # Email/SMTP Configuration
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASSWORD: ${SMTP_PASSWORD}
+      SMTP_SSL: ${SMTP_SSL}
+      SMTP_STARTTLS: ${SMTP_STARTTLS}
+      SMTP_FROM: ${SMTP_FROM}
+      SMTP_FROM_DISPLAY_NAME: ${SMTP_FROM_DISPLAY_NAME}
+
     ports:
       - "3000:3000"
       - "8443:8443"
