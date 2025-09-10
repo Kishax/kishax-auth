@@ -4,6 +4,9 @@
 
 This service implements a complete authentication flow using multiple identity providers → Keycloak → AWS IAM Identity Center → AWS Console. It provides a seamless single sign-on (SSO) experience for users to access AWS resources through their GitHub accounts or email/password credentials.
 
+## Note
+This is also used by [Kishax/infrastructure](https://github.com/Kishax/infrastructure).
+
 ## Architecture
 
 ```
