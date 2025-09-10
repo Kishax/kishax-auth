@@ -49,6 +49,10 @@ services:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
       GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
 
+      # AWS Applications Configuration
+      AWS_START_URL: ${AWS_START_URL}
+      AWS_WORKMAIL_URL: ${AWS_WORKMAIL_URL}
+
       # Logging
       KC_LOG_LEVEL: ${KC_LOG_LEVEL}
 

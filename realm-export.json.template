@@ -5,6 +5,7 @@
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": false,
+  "userManagedAccessAllowed": true,
   "registrationEmailAsUsername": true,
   "rememberMe": true,
   "verifyEmail": true,
@@ -192,6 +193,60 @@
           }
         }
       ]
+    },
+    {
+      "id": "aws-applications",
+      "clientId": "aws-applications", 
+      "name": "Amazon Web Services",
+      "description": "AWS Applications access via IAM Identity Center",
+      "enabled": true,
+      "alwaysDisplayInConsole": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "frontchannelLogout": false,
+      "baseUrl": "${AWS_START_URL}",
+      "redirectUris": ["${AWS_START_URL}/*"],
+      "webOrigins": ["${AWS_START_URL}"],
+      "defaultClientScopes": ["profile", "email", "roles"],
+      "optionalClientScopes": ["offline_access", "address", "phone"],
+      "attributes": {
+        "display.on.consent.screen": "true",
+        "consent.screen.text": "Access AWS Console and Services"
+      }
+    },
+    {
+      "id": "aws-workmail",
+      "clientId": "aws-workmail",
+      "name": "AWS WorkMail",
+      "description": "AWS WorkMail email service",
+      "enabled": true,
+      "alwaysDisplayInConsole": true,
+      "protocol": "openid-connect",
+      "publicClient": true,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "authorizationServicesEnabled": false,
+      "frontchannelLogout": false,
+      "baseUrl": "${AWS_WORKMAIL_URL}",
+      "redirectUris": ["${AWS_WORKMAIL_URL}/*"],
+      "webOrigins": ["${AWS_WORKMAIL_URL}"],
+      "defaultClientScopes": ["profile", "email", "roles"],
+      "optionalClientScopes": ["offline_access", "address", "phone"],
+      "attributes": {
+        "display.on.consent.screen": "true",
+        "consent.screen.text": "Access AWS WorkMail"
+      }
     }
   ],
   "clientScopes": [
@@ -274,10 +329,35 @@
           }
         }
       ]
+    },
+    {
+      "name": "roles",
+      "description": "OpenID Connect scope for client roles",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "client roles",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-client-role-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "resource_access.${client_id}.roles",
+            "jsonType.label": "String",
+            "multivalued": "true"
+          }
+        }
+      ]
     }
   ],
-  "defaultDefaultClientScopes": ["role_list", "profile", "email"],
-  "defaultOptionalClientScopes": ["offline_access", "address", "phone", "microprofile-jwt"],
+  "defaultDefaultClientScopes": ["roles", "profile", "email", "offline_access"],
+  "defaultOptionalClientScopes": ["address", "phone", "microprofile-jwt"],
   "browserFlow": "browser",
   "registrationFlow": "registration",
   "directGrantFlow": "direct grant", 
