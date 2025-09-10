@@ -1,4 +1,4 @@
-# Kishax Authentication Service
+# Kishax Authentication Service (KA)
 
 ## Overview
 
