@@ -27,4 +27,4 @@ content="${content//\$\{SMTP_STARTTLS\}/${SMTP_STARTTLS}}"
 echo "$content" >"$output_file"
 
 # Start Keycloak with realm import (overwrite existing)
-exec /opt/keycloak/bin/kc.sh start-dev --import-realm --spi-import-strategy=overwrite-existing
+exec /opt/keycloak/bin/kc.sh start --import-realm --spi-import-strategy=overwrite-existing
