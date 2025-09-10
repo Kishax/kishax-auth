@@ -368,5 +368,23 @@
         }
       ]
     }
-  ]
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "developer",
+        "description": "Standard developer role with basic permissions",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+  "groups": [
+    {
+      "name": "kishax-dev",
+      "path": "/kishax-dev",
+      "realmRoles": ["developer"]
+    }
+  ],
+  "defaultGroups": ["/kishax-dev"]
 }
