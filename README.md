@@ -2,38 +2,55 @@
 
 ## Overview
 
-This service implements a complete authentication flow using GitHub OAuth → Keycloak → AWS IAM Identity Center → AWS Console. It provides a seamless single sign-on (SSO) experience for users to access AWS resources through their GitHub accounts.
+This service implements a complete authentication flow using multiple identity providers → Keycloak → AWS IAM Identity Center → AWS Console. It provides a seamless single sign-on (SSO) experience for users to access AWS resources through their GitHub accounts or email/password credentials.
 
 ## Architecture
 
 ```
 ┌─────────────┐    ┌──────────────┐    ┌────────────────────────┐    ┌─────────────┐
-│   GitHub    │    │   Keycloak   │    │  AWS IAM Identity      │    │ AWS Console │
-│   OAuth     │◄──►│   Identity   │◄──►│  Center (SAML)         │◄──►│ & Services  │
-│             │    │   Provider   │    │                        │    │             │
+│  GitHub     │    │   Keycloak   │    │  AWS IAM Identity      │    │ AWS Console │
+│  OAuth      │◄──►│   Identity   │◄──►│  Center (SAML)         │◄──►│ & Services  │
+└─────────────┘    │   Provider   │    │                        │    │             │
+┌─────────────┐    │              │    │                        │    │             │
+│Email/Pass   │◄──►│ (kishax      │    │                        │    │             │
+│Local Auth   │    │  realm)      │    │                        │    │             │
 └─────────────┘    └──────────────┘    └────────────────────────┘    └─────────────┘
        │                   │                       │                        │
        │                   │                       │                        │
        ▼                   ▼                       ▼                        ▼
-  User Login         Realm: kishax            SAML Integration        Service Access
+Authentication      Identity Federation      SAML Integration        Service Access
+ (2FA Required)
 ```
 
 ## Authentication Flow
 
 ### 1. User Authentication Journey
 
+#### Option 1: GitHub OAuth Flow
 1. **User Access**: User attempts to access AWS Console via IAM Identity Center
 2. **SAML Redirect**: IAM Identity Center redirects to Keycloak SAML endpoint
-3. **Identity Provider Selection**: Keycloak presents GitHub as identity provider option
+3. **Identity Provider Selection**: User selects GitHub OAuth authentication
 4. **GitHub OAuth**: User authenticates with GitHub OAuth
-5. **Attribute Mapping**: Keycloak maps GitHub user attributes to SAML assertions
+5. **2FA Verification**: User completes required two-factor authentication (TOTP/Authenticator)
+6. **Attribute Mapping**: Keycloak maps GitHub user attributes to SAML assertions
+7. **SAML Response**: Keycloak sends SAML response back to IAM Identity Center
+8. **AWS Access**: IAM Identity Center grants access to AWS Console and services
+
+#### Option 2: Email/Password Flow
+1. **User Access**: User attempts to access AWS Console via IAM Identity Center
+2. **SAML Redirect**: IAM Identity Center redirects to Keycloak SAML endpoint
+3. **Local Authentication**: User enters email/password credentials
+4. **2FA Verification**: User completes required two-factor authentication (TOTP/Authenticator)
+5. **Group Assignment**: User automatically assigned to `kishax-dev` group with `developer` role
 6. **SAML Response**: Keycloak sends SAML response back to IAM Identity Center
 7. **AWS Access**: IAM Identity Center grants access to AWS Console and services
 
 ### 2. Key Components
 
-#### GitHub Identity Provider
-- **Purpose**: Primary authentication source
+#### Authentication Options
+
+##### GitHub Identity Provider
+- **Purpose**: External OAuth authentication source
 - **Mapping Strategy**: Uses GitHub's permanent user ID (not username/email)
 - **Attributes Collected**:
   - `id` → `username` (permanent identifier)
@@ -41,14 +58,26 @@ This service implements a complete authentication flow using GitHub OAuth → Ke
   - `email` → `email`
   - `name` → `firstName`
 
+##### Local Email/Password Authentication
+- **Purpose**: Direct authentication with Keycloak user store
+- **Security Features**:
+  - Email verification required
+  - Strong password policy enforcement
+  - Brute force protection
+  - Mandatory 2FA (TOTP/Authenticator apps)
+- **Default Group Assignment**: All new users automatically join `kishax-dev` group
+- **Default Permissions**: `developer` role with standard development access
+
 #### Keycloak (Identity Provider)
 - **Realm**: `kishax`
 - **Protocol**: SAML 2.0 for IAM Identity Center integration
 - **Features**:
-  - GitHub OAuth integration
+  - Multiple authentication methods (GitHub OAuth + Local)
+  - Mandatory 2FA for all authentication methods
   - SAML assertion generation
   - User attribute mapping
   - Session management
+  - Group-based access control
 
 #### AWS IAM Identity Center
 - **Integration**: SAML-based federation
@@ -280,3 +309,8 @@ For issues or questions regarding this authentication service:
 2. Verify all environment variables are properly configured
 3. Test individual components (GitHub OAuth, Keycloak, IAM Identity Center)
 4. Consult Keycloak and AWS IAM Identity Center documentation for advanced configuration
+
+## 現在手動でやっていること
+- Clients\>account-console\>Client Scopesにemail, offline\_access, profile, rolesを追加する
+こちらおそらく初期セットアップの時にDBに入れておけば良い気がする
+- DBのバックアップ
