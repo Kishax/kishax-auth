@@ -338,7 +338,7 @@
         },
         {
           "flowAlias": "Browser - Conditional OTP",
-          "requirement": "CONDITIONAL",
+          "requirement": "REQUIRED",
           "priority": 20,
           "userSetupAllowed": false,
           "autheticatorFlow": true
