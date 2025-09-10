@@ -315,3 +315,4 @@ For issues or questions regarding this authentication service:
   こちらおそらく初期セットアップの時にDBに入れておけば良い気がする
   理由: https://github.com/keycloak/keycloak/discussions/12894
 - DBのバックアップ
+- Realms settings\>Email\>SMTPの有効化
