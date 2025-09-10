@@ -90,6 +90,16 @@
       }
     },
     {
+      "name": "github-email-backup-mapper",
+      "identityProviderAlias": "github",
+      "identityProviderMapper": "github-user-attribute-mapper",
+      "config": {
+        "syncMode": "FORCE",
+        "jsonField": "email",
+        "userAttribute": "github_email"
+      }
+    },
+    {
       "name": "github-name-mapper",
       "identityProviderAlias": "github", 
       "identityProviderMapper": "github-user-attribute-mapper",
