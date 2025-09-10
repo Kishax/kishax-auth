@@ -158,18 +158,6 @@
           }
         },
         {
-          "name": "github_id",
-          "protocol": "saml",
-          "protocolMapper": "saml-user-attribute-mapper",
-          "consentRequired": false,
-          "config": {
-            "attribute.nameformat": "Basic",
-            "user.attribute": "github_id",
-            "friendly.name": "github_id",
-            "attribute.name": "https://kishax.net/SAML/Attributes/GitHubID"
-          }
-        },
-        {
           "name": "firstName",
           "protocol": "saml",
           "protocolMapper": "saml-user-property-mapper",
