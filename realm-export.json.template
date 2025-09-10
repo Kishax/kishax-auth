@@ -66,7 +66,7 @@
       "config": {
         "syncMode": "INHERIT",
         "jsonField": "id",
-        "userAttribute": "username"
+        "userAttribute": "github_id"
       }
     },
     {
